@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content},~{this::title})}">
+    <title th:fragment="title">로그아웃</title>
+    <th:block th:fragment="content">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #f8f9fa;
+            }
+            .logout-container {
+                background-color: #ffffff;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                width: 100%;
+                max-width: 400px;
+            }
+            .logout-message {
+                font-size: 18px;
+                margin-bottom: 20px;
+                color: #333333;
+            }
+            .logout-button {
+                width: 100%;
+                padding: 10px;
+                background-color: #fd999e;
+                color: #ffffff;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            .logout-button:hover {
+                background-color: #ff7075;
+            }
+            .link-container {
+                margin-top: 15px;
+                font-size: 14px;
+            }
+            .link-container a {
+                text-decoration: none;
+                color: #fd999e;
+            }
+        </style>
+
+        <body>
+        <div class="logout-container">
+            <p class="logout-message">로그아웃하시겠습니까?</p>
+            <form th:action="@{/festival/logout}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" class="logout-button">로그아웃</button>
+            </form>
+            <div class="link-container">
+                <a th:href="@{/festival/home}">홈으로 돌아가기</a>
+            </div>
+        </div>
+        </body>
+    </th:block>
+</th:block>

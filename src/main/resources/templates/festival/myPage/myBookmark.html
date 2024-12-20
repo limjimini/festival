@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content},~{this::title})}">
+    <title th:fragment="title">북마크</title>
+    <th:block th:fragment="content">
+        <style>
+            /* 전체 배경 및 텍스트 */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #fff5f5; /* 연한 핑크 배경 */
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #ffffff; /* 흰색 배경 */
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+            }
+            h2 {
+                text-align: center;
+                color: #fd9e9f; /* 메인 핑크 */
+                margin-bottom: 20px;
+            }
+            /* 카드 외부 박스 */
+            .comment-card-wrapper {
+                margin-bottom: 20px;
+                border: 1px solid #fcbaba; /* 연한 핑크 테두리 */
+                border-radius: 10px;
+                padding: 15px;
+                background-color: #ffffff; /* 밝은 핑크 배경 */
+            }
+            .comment-card-wrapper p {
+                font-size: 16px;
+                color: #fd9e9f; /* 메인 핑크 */
+                margin: 5px 0;
+            }
+            /* 링크 스타일 */
+            .comment-card {
+                display: block;
+                text-decoration: none;
+                border: 2px solid #fd9e9f; /* 메인 핑크 테두리 */
+                border-radius: 8px;
+                padding: 10px;
+                background-color: #ffffff;
+                color: #ffffff; /* 흰색 텍스트 */
+                font-weight: bold;
+                transition: all 0.3s ease;
+            }
+            .comment-card:hover {
+                background-color: #fd9e9f; /* 메인 핑크 강조 */
+                color: #ffffff; /* 흰색 유지 */
+                border-color: #e07c7c; /* 더 어두운 핑크 */
+            }
+            /* 북마크 정보 */
+            .comment {
+                margin-top: 10px;
+                padding: 10px;
+                border: 1px solid #fd9e9f; /* 메인 핑크 테두리 */
+                border-radius: 8px;
+                background-color: #ffe8e8; /* 밝은 핑크 배경 */
+            }
+            .comment p {
+                margin: 5px 0;
+                color: #7a2e2f; /* 어두운 적갈색 */
+                font-size: 14px;
+            }
+            /* 버튼, 링크 및 강조 스타일 */
+            a, strong {
+                color: #fd9e9f;
+                font-weight: bold;
+            }
+            a:hover {
+                color: #e07c7c; /* 어두운 핑크 */
+            }
+        </style>
+
+        <body>
+        <div class="container">
+            <h2>나의 북마크</h2>
+            <div class="comments">
+                <!-- boardList 반복 출력 -->
+                <div class="comment-card-wrapper" th:each="board : ${boardList}">
+                    <!-- 축제명 -->
+                    <p class="comment-card-wrapper" th:text="${board.title}">
+                        축제명
+                    </p>
+                    <!-- 댓글 카드 -->
+                    <a class="comment-card" th:href="@{/festival/details/{boardId}(boardId=${board.boardId})}">
+                        <strong>내용</strong>
+                        <!-- 해당 boardId에 매칭되는 bookmarks 반복 출력 -->
+                        <div class="comment" th:each="bookmark : ${bookmarks}"
+                             th:if="${bookmark.boardId} == ${board.boardId}">
+                            <p class="comment-id" th:text="${bookmark.bookmarkId}">북마크 ID</p>
+                            <p class="comment-email" th:text="${bookmark.email}">이메일</p>
+                            <p class="comment-bookmark" th:text="${bookmark.bookmark}">북마크 내용</p>
+                            <p class="comment-board" th:text="${bookmark.boardId}">보드 ID</p>
+                            <p class="comment-member" th:text="${bookmark.memberId}">회원 ID</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </body>
+    </th:block>
+</th:block>

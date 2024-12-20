@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content},~{this::title})}">
+    <title th:fragment="title">마이페이지</title>
+    <th:block th:fragment="content">
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color:#ffffff;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background: #ffffff;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                margin-top: 40px;
+                text-align: center;
+            }
+            .profile-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .profile-header img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                border: 3px solid #ffd6d8;
+            }
+            .profile-header h2 {
+                color: #333;
+                margin: 10px 0;
+            }
+            .profile-header p {
+                color: #666;
+                margin: 5px 0;
+            }
+            .menu {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 30px;
+            }
+            .menu-item {
+                width: 100px;
+                margin: 10px;
+                padding: 10px;
+                background: #ffd6d8;
+                border-radius: 8px;
+                text-align: center;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                transition: background 0.3s;
+            }
+            .menu-item:hover {
+                background: #ffd6d8;
+            }
+            .menu-item img {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 10px;
+            }
+            .menu-item a {
+                text-decoration: none;
+                color: #333;
+                font-size: 14px;
+                font-weight: bold;
+            }
+            footer {
+                text-align: center;
+                margin-top: 40px;
+                padding: 10px 0;
+                background-color: #ffd6d8;
+                color: #666;
+            }
+        </style>
+
+        <body>
+        <div class="container">
+            <div class="profile-header">
+                <img src="profile-image.jpg" alt="프로필 이미지">
+                <h2><span th:text="${myPage.name}">Mary</span></h2>
+                <h6><strong>소셜 로그인:</strong> <span th:text="${myPage.provider}">Google</span></h6>
+                <p><strong>이메일:</strong> <span th:text="${myPage.email}">user@example.com</span></p>
+            </div>
+            <div class="menu">
+                <div class="menu-item">
+                    <img src="" alt="myPage">
+                    <a th:href="@{/festival/myPage/myInfo}">내 정보 관리</a>
+                </div>
+                <div class="menu-item">
+                    <img src="" alt="comment">
+                    <a th:href="@{/festival/myPage/myComment}">내가 단 댓글</a>
+                </div>
+                <div class="menu-item">
+                    <img src="" alt="bookmark">
+                    <a th:href="@{/festival/myPage/myBookmark}">북마크</a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>2024 GreenArt</p>
+        </footer>
+
+        </body>
+    </th:block>
+</th:block>

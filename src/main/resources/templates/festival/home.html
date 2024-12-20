@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content},~{this::title})}">
+    <title th:fragment="title">로그인</title>
+    <th:block th:fragment="content">
+
+    <style>
+        nav {
+            display: flex;
+            justify-content: right;
+            background-color: #fd999e;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1em;
+        }
+    </style>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+
+
+        header {
+            position: relative;
+            width: 690px; /* 슬라이드쇼 너비 */
+            height: 500px; /* 슬라이드쇼 높이 */
+            margin: 0 auto; /* 중앙 정렬 */
+            overflow: hidden; /* 영역을 벗어난 이미지 숨기기 */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+        }
+        header img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0; /* 초기 상태: 보이지 않음 */
+            transition: opacity 1s ease-in-out; /* 부드러운 페이드 효과 */
+        }
+        header img.active {
+            opacity: 1; /* 보이는 상태 */
+        }
+        header h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #fd999e;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1em;
+        }
+        section {
+            padding: 20px;
+            text-align: center;
+        }
+        .info-section {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .info-section div {
+            width: 25%;
+            padding: 10px;
+            background: #f4f4f4;
+            border-radius: 10px;
+        }
+        footer {
+            background-color: #2b6e37;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+
+<header>
+    <div th:each="board : ${boardList}">
+        <img th:src="${board.imageUrl}" th:alt="${board.title}"/>
+    </div>
+</header>
+
+<nav>
+    <a href="#help">여행도우미</a>
+    <a href="#info">관광정보</a>
+    <a href="#events">공지사항</a>
+    <a href="#recommend">추천여행</a>
+</nav>
+
+<section id="info">
+    <h2>축제정보-색상.폰트.배치 수정하면됩니다</h2>
+    <div class="info-section">
+        <div>
+            <h3>교통정보</h3>
+            <p>도움이 되는 교통 정보 안내.</p>
+        </div>
+        <div>
+            <h3>숙박정보</h3>
+            <p>숙박시설 관련 안내.</p>
+        </div>
+        <div>
+            <h3>추천 관광지</h3>
+            <p>필수 관광지를 소개합니다.</p>
+        </div>
+    </div>
+</section>
+
+<section id="explore">
+    <h2>관광정보</h2>
+    <p>관광 명소를 소개합니다!</p>
+</section>
+
+<section id="events">
+    <h2>공지사항</h2>
+    <p>이벤트와 새로운 정보를 확인하세요.</p>
+</section>
+
+<section id="recommend">
+    <h2>추천여행</h2>
+    <p>계절에 맞는 추천 여행 코스를 확인하세요!</p>
+</section>
+
+<footer>
+    <p> 2024 GreenArt</p>
+</footer>
+<script>
+    // 슬라이드쇼 동작
+    document.addEventListener('DOMContentLoaded', function () {
+        const images = document.querySelectorAll('header img'); // 모든 이미지 선택
+        let currentIndex = 0; // 현재 보여지는 이미지 인덱스
+
+        // 첫 번째 이미지를 활성화
+        if (images.length > 0) {
+            images[0].classList.add('active');
+        }
+
+        // 5초 간격으로 이미지 변경
+        setInterval(() => {
+            // 현재 활성화된 이미지 숨김
+            images[currentIndex].classList.remove('active');
+
+            // 다음 이미지로 인덱스 변경 (마지막 이미지라면 처음으로 돌아감)
+            currentIndex = (currentIndex + 1) % images.length;
+
+            // 다음 이미지 활성화
+            images[currentIndex].classList.add('active');
+        }, 5000); // 5000ms = 5초
+    });
+</script>
+
+</body>
+</th:block>
+</th:block>

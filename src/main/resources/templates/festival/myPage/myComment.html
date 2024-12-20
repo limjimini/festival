@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content},~{this::title})}">
+    <title th:fragment="title">내가 단 댓글</title>
+    <th:block th:fragment="content">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f9f9f9;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                margin-top: 40px;
+            }
+
+            h2 {
+                color: #333;
+                font-size: 24px;
+                text-align: center;
+                margin-bottom: 20px;
+                font-weight: bold;
+            }
+
+            .comments {
+                margin-top: 20px;
+            }
+
+            .comment-card-wrapper {
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .comment-title {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #d48fd9; /* 제목 색상 */
+                text-decoration: none;
+                display: block;
+                word-wrap: break-word;
+            }
+
+            .comment-title:hover {
+                text-decoration: underline;
+            }
+
+            .comment-card {
+                background: #fdfdfd;
+                padding: 20px;
+                border-radius: 8px;
+                border: 1px solid #ddd;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                text-decoration: none;
+                color: inherit;
+                display: block;
+                position: relative;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .comment-card:hover {
+                background: #f7f7f7;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .comment-card .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+
+            .comment-card .header .rating {
+                font-size: 16px;
+                color: #FFD700; /* 별 색상 */
+            }
+
+            .comment-card .header .date {
+                font-size: 12px;
+                color: #888;
+            }
+
+            .comment-card p {
+                margin: 10px 0;
+                font-size: 14px;
+                line-height: 1.5;
+                color: #555;
+            }
+
+            .comment-card p strong {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: #444;
+            }
+
+            /* 반응형 처리 */
+            @media (max-width: 768px) {
+                .container {
+                    padding: 15px;
+                }
+
+                .comment-title {
+                    font-size: 16px;
+                }
+
+                .comment-card {
+                    padding: 15px;
+                }
+
+                .comment-card .header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .comment-card .header .date {
+                    margin-top: 10px;
+                }
+
+                .comment-card p {
+                    font-size: 13px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .container {
+                    padding: 10px;
+                }
+
+                .comment-title {
+                    font-size: 14px;
+                }
+
+                .comment-card {
+                    padding: 10px;
+                }
+
+                .comment-card .header .rating {
+                    font-size: 14px;
+                }
+
+                .comment-card .header .date {
+                    font-size: 10px;
+                }
+
+                .comment-card p {
+                    font-size: 12px;
+                }
+            }
+        </style>
+
+        <body>
+        <div class="container">
+            <h2>내가 작성한 댓글</h2>
+            <div class="comments">
+                <!-- 댓글 정보를 반복 출력 -->
+                <div class="comment-card-wrapper" th:each="comment, iterStat : ${myComment.comments}">
+                    <!-- 축제명 (comment-card 외부로 분리) -->
+                    <p class="comment-title" th:text="${boardList[iterStat.index].title}">
+                        축제명
+                    </p>
+                    <!-- 댓글 카드 (전체를 링크로 감쌈) -->
+                    <a class="comment-card" th:href="@{/festival/details/{boardId}(boardId=${comment.boardId})}">
+                        <!-- 작성일과 평점 -->
+                        <div class="header">
+                            <!-- 평점 (좌측 상단) -->
+                            <div class="rating">
+                                <span th:each="star : ${#numbers.sequence(1, comment.rating)}">&#9733;</span>
+                            </div>
+                            <!-- 작성일 (우측 상단) -->
+                            <div class="date">
+                                <span th:text="${comment.regDate}">2024-12-10</span>
+                            </div>
+                        </div>
+
+                        <!-- 댓글 내용 -->
+                        <p>
+                            <strong>내용</strong>
+                            <span th:text="${comment.content}">댓글 내용이 여기에 표시됩니다.</span>
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </body>
+    </th:block>
+</th:block>

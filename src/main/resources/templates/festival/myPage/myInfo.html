@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content},~{this::title})}">
+    <title th:fragment="title">내정보 관리</title>
+    <th:block th:fragment="content">
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #ffffff;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background: #ffffff;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                margin-top: 40px;
+            }
+            h2 {
+                color: #333;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .user-info {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+                background: #ffd6d8;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+            .user-info p {
+                font-size: 16px;
+                margin: 10px 0;
+                color: #555;
+            }
+            .user-info p strong {
+                color: #333;
+            }
+            .button-container {
+                text-align: center;
+                margin-top: 20px;
+            }
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 14px;
+                font-weight: bold;
+                color: #ffffff;
+                background-color: #ffd6d8;
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            .button:hover {
+                background-color: #ffd6d8;
+            }
+            footer {
+                text-align: center;
+                margin-top: 40px;
+                padding: 10px 0;
+                background-color: #ffd6d8;
+                color: #666;
+            }
+        </style>
+
+        <body>
+        <div class="container">
+            <h2>내 정보 관리</h2>
+            <div class="user-info">
+                <p><strong>성함:</strong> <span th:text="${myInfo.name}">홍길동</span></p>
+                <p><strong>이메일:</strong> <span th:text="${myInfo.email}">hong@example.com</span></p>
+                <p><strong>비밀번호:</strong> <span th:text="${myInfo.password}">••••••••</span></p>
+                <p><strong>제공자:</strong> <span th:text="${myInfo.provider}">Google</span></p>
+            </div>
+            <div class="button-container">
+                <a href="#" class="button">정보 수정</a>
+                <a href="#" class="button">비밀번호 변경</a>
+            </div>
+        </div>
+        <footer>
+            <p>2024 GreenArt</p>
+        </footer>
+        </body>
+
+    </th:block>
+</th:block>

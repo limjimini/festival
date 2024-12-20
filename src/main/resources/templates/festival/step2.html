@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content},~{this::title})}">
+    <title th:fragment="title">이메일 인증</title>
+    <th:block th:fragment="content">
+
+        <div class="container">
+            <h2>이메일 인증</h2>
+            <form th:action="@{/festival/step2}" method="post" id="authForm">
+                <div class="form-group">
+                    <label for="email">이메일</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="이메일 입력">
+                </div>
+                <button type="button" id="mailCheckBtn" class="btn btn-info">인증번호 요청</button>
+
+                <div class="form-group mt-3">
+                    <label for="code">인증번호</label>
+                    <input type="text" class="form-control" id="code" placeholder="인증번호 입력">
+                    <span id="resultMessage" class="text-danger"></span>
+                </div>
+                <input th:type="hidden" id="verifiedEmail" name="verifiedEmail">
+                <button type="button" id="codeCheckBtn" class="btn btn-primary">확인</button>
+                <button type="submit" class="btn btn-primary" disabled>다음</button>
+            </form>
+        </div>
+
+        <script th:inline="javascript">
+            $(function () {
+                let emailSent = false;
+                let verified = false;
+
+                // 인증번호 요청
+                $('#mailCheckBtn').click(function () {
+                    const email = $('#email').val();
+
+                    if (!email) {
+                        alert('이메일을 입력해주세요.');
+                        return;
+                    }
+
+                    $.get(/*[[@{/festival/mailSend}]]*/, { email: email }, function (response) {
+                        if (response.success) {
+                            alert('인증번호가 전송되었습니다.');
+                            emailSent = true;
+                        } else {
+                            alert('이메일 전송에 실패했습니다. 다시 시도해주세요.');
+                        }
+                    });
+                });
+
+                // 확인 버튼 클릭 시 인증번호 확인
+                $('#codeCheckBtn').click(function () {
+                    const code = $('#code').val();
+
+                    if (!emailSent) {
+                        $('#resultMessage').text('먼저 인증번호를 요청해주세요.').css('color', 'red');
+                        return;
+                    }
+
+                    if (!code) {
+                        $('#resultMessage').text('인증번호를 입력해주세요.');
+                        return;
+                    }
+
+                    $.get(/*[[@{/festival/mailCheck}]]*/, { code: code }, function (isMatch) {
+
+                            if (isMatch) {
+                                $('#resultMessage').text('인증에 성공했습니다.').css('color', 'green');
+                                verified = true;
+
+                                // 인증번호 입력창 비활성화
+                                $('#code').prop('readonly',true);
+
+
+                                // 인증된 이메일을 숨겨진 필드에 저장
+                                $('#verifiedEmail').val($('#email').val());
+
+                                // 다음 버튼 활성화
+                                $('button[type="submit"]').prop('disabled', false);
+                            } else {
+                                $('#resultMessage').text('인증번호가 일치하지 않습니다. 다시 시도해주세요.').css('color', 'red');
+                                verified = false;
+
+                                // 인증번호 입력창 활성화 유지
+                                $('#code').prop('readonly', false);
+
+                                // "다음" 버튼 비활성화
+                                $('button[type="submit"]').prop('disabled', true);
+                            }
+                    });
+                });
+                // 다음 버튼 비활성화
+                $('button[type="submit"]').prop('disabled',true);
+            });
+        </script>
+
+    </th:block>
+</th:block>

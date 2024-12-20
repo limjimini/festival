@@ -1,0 +1,234 @@
+/* 화면 전체 채우기 */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* 스크롤 숨김 */
+}
+
+/* 전체 컨테이너 설정 */
+#container {
+    font-family: "Noto Sans KR", sans-serif; /* 기본 폰트 */
+    font-optical-sizing: auto;
+    font-weight: 400; /* 100-900 */
+    font-style: normal; /* 기본 폰트 스타일 */
+
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+}
+
+/* 지도 */
+#map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+/* 리스트 */
+#board {
+    position: fixed;
+    width: 380px;
+    height: calc(100% - 56px); /* 메뉴바 높이만큼 뺀 값 */
+    background-color: rgba(244, 244, 244, 0.7); /* 반투명 배경 */
+    z-index: 2; /* 축제 리스트가 지도 위에 뜨도록 */
+    overflow-y: auto; /* 스크롤 가능 */
+    padding: 10px;
+}
+
+#mainTitle { /* 제목 */
+    /*font-family: "Jua", serif;*/
+    /*font-weight: 700; !*400*!*/
+
+    /*font-family: "Gugi", sans-serif;*/
+
+    font-family: "Oswald", sans-serif;
+    font-weight: 700; /* 200-700 */
+
+    margin: 0 1rem 1rem 0.5rem;
+}
+
+#search { /* 검색 */
+    height: 48px;
+    margin: 10px 15px 5px 15px;
+}
+#search .form-control:focus {
+    box-shadow: none;
+    border: 1px solid #fd999e;
+}
+#searchBtn { /* 검색 버튼 */
+    background-color: #fd999e; /* 버튼 배경 색상 */
+    color: white; /* 돋보기 아이콘 색상 */
+    border-radius: 0 5px 5px 0;
+}
+#searchInput { /* 검색 입력 필드 */
+    border-radius: 5px 0 0 5px;
+}
+
+#festivalList { /* 축제 리스트 */
+    overflow-y: auto; /* 스크롤 가능 */
+    margin: 0 15px 10px 15px;
+    max-height: calc(100% - 275px); /* 최대 높이: 100%-275px 값으로 설정 */
+}
+#listTitle { /* 축제 리스트 이름 */
+    font-weight: 600;
+    margin: 5px 0 5px 0;
+}
+#festivalList p { /* 축제 리스트 상세 정보 */
+    margin: 1px 0 1px 0;
+    color: #555555;
+}
+#festivalList small { /* 축제 리스트 상세 정보 */
+    display: -webkit-box; /* 여러 줄을 지원 */
+    -webkit-box-orient: vertical; /* 세로 방향으로 정렬 */
+    -webkit-line-clamp: 2; /* 최대 2줄 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
+    color: #555555;
+}
+
+#popularFestivalsList { /* 인기 축제 리스트 */
+    margin: 0 15px 0 15px;
+}
+#popularFestivalsList h6 { /* 인기 축제 이름 */
+    margin: 0 0 5px 12px;
+    color: #555;
+}
+#popularFestivals .list-group-item { /* 인기 축제 목록 */
+    font-weight: 600;
+    height: 48px;
+    line-height: 30px; /* 텍스트의 줄 높이 */
+    display: -webkit-box; /* 여러 줄을 지원 */
+    -webkit-box-orient: vertical; /* 세로 방향으로 정렬 */
+    -webkit-line-clamp: 1; /* 최대 1줄 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
+    cursor: pointer; /* 마우스 커서가 포인터로 변화 */
+}
+
+#viewMapBtn { /* 지도 전체 보기 버튼 */
+    top: 10px;
+    z-index: 9999;
+}
+#viewFestivalBtn { /* 축제 모두 보기 버튼 */
+    top: 65px;
+    z-index: 9998;
+}
+#viewMapBtn, #viewFestivalBtn {
+    position: absolute;
+    right:10px;
+    padding: 10px 20px;
+    cursor: pointer; /* 마우스 커서가 포인터로 변화 */
+    border: 1px solid #bcbaba;
+    border-radius: 5px;
+    font-size: 15px;
+}
+#viewMapBtn:hover, #viewFestivalBtn:hover {
+    background-color: #fd999e;
+    color: white;
+}
+
+.page-item .page-link { /* 페이지네이션 */
+    color: #fd999e;
+}
+.page-item.active .page-link {
+    background-color: #fd999e;
+    border-color: #fd999e;
+    color: white;
+}
+@media (max-height: 800px) {
+    #festivalList {
+        max-height: 250px;
+    }
+}
+
+/* 인포윈도우 */
+.wrap {
+    border: 1px solid #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    overflow: auto; /* 스크롤 가능 */
+    width: 275px;
+    background-color: #fff;
+}
+
+.info .title { /* 축제 이름 */
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    padding: 10px 0 0 10px;
+    display: flex;
+    justify-content: space-between; /* 간격 고르게 */
+    align-items: center; /* 수직 정렬 */
+    cursor: pointer; /* 마우스 커서가 포인터로 변화 */
+}
+.info .title a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: black;
+}
+.info .title a:hover {
+    color: #007bff;
+}
+
+.info .body { /* 축제 본문 */
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+}
+
+.info .img img { /* 축제 이미지 */
+    border-radius: 6px;
+    object-fit: cover; /* 이미지가 크기에 맞춰서 설정 */
+    width: 70px;
+    height: 70px;
+}
+
+.info .desc { /* 축제 정보 */
+    font-size: 12px;
+    display: flex;
+    flex-direction: column; /* 세로로 배치 */
+    gap: 1px;
+    /*gap: 5px;*/
+}
+.info .desc .date {
+    margin-bottom: 0.5rem;
+}
+.info .desc .location, .date {
+    font-size: 13px;
+}
+.info .desc .location, .date ,.contact {
+    color: #555;
+}
+
+/* 확대, 축소 버튼 */
+.radius_border {
+    border: 1px solid #bcbaba;
+    border-radius: 5px;
+}
+
+.custom_zoomcontrol {
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    width: 38px;
+    height: 80px;
+    overflow: hidden; /* 스크롤바 표시 X */
+    z-index: 999;
+    background-color: white;
+}
+.custom_zoomcontrol span {
+    display: block;
+    width: 38px;
+    height: 40px;
+    text-align: center; /* 중앙 정렬 */
+    cursor: pointer; /* 마우스 커서가 포인터로 변화 */
+}
+.custom_zoomcontrol span img {
+    width: 18px;
+    height: 18px;
+    border: none;
+    margin: 10px 2px 0 0;
+}
+.custom_zoomcontrol span:first-child { /* 확대 버튼 아래에 테두리 추가 */
+    border-bottom: 1px solid #bfbfbf;
+}

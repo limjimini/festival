@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content},~{this::title})}">
+    <title th:fragment="title">로그인</title>
+    <th:block th:fragment="content">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        .logo img {
+
+            width: 120px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .login-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #fd999e;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .login-button:disabled {
+            background-color: #fd999e;
+            cursor: not-allowed;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            margin: 10px 0;
+        }
+        .checkbox-container input {
+            margin-right: 5px;
+        }
+        .link-container {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .link-container a {
+            text-decoration: none;
+            color: #fd999e;
+            margin: 0 5px;
+        }
+        .social-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .social-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .social-button img {
+            width: 24px;
+        }
+        .membership-benefit {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #fd999e;
+        }
+        .membership-benefit span {
+            color: #ff5722;
+            font-weight: bold;
+        }
+    </style>
+        <style>
+            .social-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 10px; /* 버튼 사이 간격 */
+                margin-top: 20px;
+            }
+
+            .social-button {
+                width: 60px; /* 버튼 크기 */
+                height: 60px;
+                border-radius: 8px; /* 버튼 모서리 둥글게 */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: transform 0.2s;
+            }
+
+            .social-button:hover {
+                transform: scale(1.1); /* 버튼 확대 효과 */
+            }
+
+            .social-button img {
+                width: 24px;
+                height: 24px;
+            }
+        </style>
+        <style>
+            .social-buttons-container {
+                display: flex;
+                justify-content: center;
+                gap: 10px; /* 아이콘 간 간격 */
+                margin-top: 20px;
+            }
+
+            .social-button {
+                width: 50px; /* 버튼 크기 */
+                height: 50px;
+                border-radius: 50%; /* 원형 버튼 */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s, box-shadow 0.2s;
+                text-decoration: none;
+            }
+
+            .social-button:hover {
+                transform: scale(1.1); /* 확대 효과 */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .social-button img {
+                width: 24px;
+                height: 24px;
+            }
+
+            /* 소셜별 배경색 지정 */
+            .social-button.google {
+                background-color: #db4437; /* Google 빨강 */
+            }
+
+            .social-button.kakao {
+                background-color: #fee500; /* Kakao 노랑 */
+            }
+
+            .social-button.naver {
+                background-color: #03c75a; /* Naver 초록 */
+            }
+        </style>
+
+    <body>
+        <div class="login-container">
+            <div class="logo">
+                <img src="https://via.placeholder.com/120x50?text=%ED%95%98%EB%82%98%ED%88%AC%EC%96%B4" alt="팀로고">
+            </div>
+            <form th:action="@{/festival/login}" th:method="post" class="loginForm">
+                <div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label"><b>이메일</b></label>
+                        <input type="email" id="email" name="username" class="form-control" th:value="${loginDTO.email}" placeholder="로그인 아이디" autocomplete="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label"><b>비밀번호</b></label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" autocomplete="current-password">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="social-buttons-container">
+                        <!-- 카카오 로그인 -->
+                        <a th:href="@{/oauth2/authorization/kakao}" class="social-button kakao">
+                            <img src="https://via.placeholder.com/40/FFFFFF?text=K" alt="Kakao 로그인">
+                        </a>
+
+                        <!-- 네이버 로그인 -->
+                        <a th:href="@{/oauth2/authorization/naver}" class="social-button naver">
+                            <img src="https://via.placeholder.com/40/FFFFFF?text=N" alt="Naver 로그인">
+                        </a>
+
+                        <!-- 구글 로그인 -->
+                        <a th:href="@{/oauth2/authorization/google}" class="social-button google">
+                            <img src="https://via.placeholder.com/40/FFFFFF?text=G" alt="Google 로그인">
+                        </a>
+                    </div>
+                        <button th:type="submit" class="login-button">로그인</button>
+                </div>
+            </form>
+            <div th:if="${error}" class="alert alert-warning mt-3">
+                    <strong th:text="${loginDTO.errorMessage}">Warning!</strong>
+            </div>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="remember-id">
+                <label for="remember-id">아이디 저장</label>
+            </div>
+            <div class="link-container">
+                <a href="#">아이디 찾기</a> | <a href="#">비밀번호 찾기</a> | <a th:href="@{/festival/step1}">회원가입</a>
+            </div>
+        </div>
+
+    </body>
+
+    </th:block>
+</th:block>
